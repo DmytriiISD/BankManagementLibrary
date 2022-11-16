@@ -84,5 +84,20 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void AddCreditCard_CorrectInputData_ShouldCreateCreditCard()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            var expected = true;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0000");
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }

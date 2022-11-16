@@ -49,5 +49,10 @@ namespace BankManagementLibrary
         {
             return HashCode.Combine(firstName, lastName, email, phoneNumber, passportId);
         }
+
+        public bool AddCreditCard(string number)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

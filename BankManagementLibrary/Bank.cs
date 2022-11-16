@@ -36,5 +36,10 @@ namespace BankManagementLibrary
                 return false;
             else return true;
         }
+
+        public Account ReturnAccount(string phNumber)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
