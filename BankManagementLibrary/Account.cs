@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
@@ -52,7 +53,9 @@ namespace BankManagementLibrary
 
         public bool AddCreditCard(string number)
         {
-            throw new NotImplementedException();
+            if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+                return false;
+            else return true;
         }
     }
 }
