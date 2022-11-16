@@ -29,7 +29,9 @@ namespace BankManagementLibrary
                 return false;
             Account account = new Account(firstName, lastName, email, phoneNumber, passportId);
             accounts.Add(account);
-            return true;
+            if (!accounts.Contains(account))
+                return false;
+            else return true;
         }
     }
 }
