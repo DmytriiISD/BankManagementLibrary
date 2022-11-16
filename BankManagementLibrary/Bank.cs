@@ -12,7 +12,10 @@ namespace BankManagementLibrary
         public bool RegisterAccount(string firstName, string lastName,
             string email, string phoneNumber, string passportId)
         {
-            return true;
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(email)
+                || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(passportId))
+                return false;
+            else return true;
         }
     }
 }
