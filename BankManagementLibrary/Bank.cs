@@ -12,7 +12,7 @@ namespace BankManagementLibrary
         public bool RegisterAccount(string firstName, string lastName,
             string email, string phoneNumber, string passportId)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
