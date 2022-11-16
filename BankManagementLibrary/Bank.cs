@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
     internal class Bank
     {
+        public List<Account> accounts;
         public Bank()
         {
-
+            accounts = new List<Account>();
         }
 
         public bool RegisterAccount(string firstName, string lastName,
@@ -25,7 +27,9 @@ namespace BankManagementLibrary
                 return false;
             else if (!Regex.IsMatch(passportId, @"^\d{9}$"))
                 return false;
-            else return true;
+            Account account = new Account(firstName, lastName, email, phoneNumber, passportId);
+            accounts.Add(account);
+            return true;
         }
     }
 }
