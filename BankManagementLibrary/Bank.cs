@@ -39,7 +39,11 @@ namespace BankManagementLibrary
 
         public Account ReturnAccount(string phNumber)
         {
-            throw new NotImplementedException();
+            if (!Regex.IsMatch(phNumber, @"^\+[3][8][0]\d{9}$"))
+                throw new ArgumentException();
+            else if (accounts.Exists(x => x.PhoneNumber == phNumber))
+                return accounts.Find(x => x.PhoneNumber == phNumber);
+            else throw new ArgumentException();
         }
     }
 }
