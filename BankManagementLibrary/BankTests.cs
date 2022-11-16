@@ -100,6 +100,22 @@ namespace BankManagementLibrary
             Assert.Equal(expected, actual);
         }
 
+        [Theory]
+        [InlineData("+3800000000001")]
+        [InlineData("380000000000")]
+        [InlineData("+38000000000")]
+        [InlineData("+111000000000")]
+        [InlineData("+380123456789")]
+        public void ReturnAccount_WrongInputData_ShouldTrowException(string value)
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => bank.ReturnAccount(value));
+        }
+
         [Fact]
         public void AddCreditCard_CorrectInputData_ShouldCreateCreditCard()
         {
