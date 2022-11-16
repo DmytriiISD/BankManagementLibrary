@@ -8,7 +8,18 @@ namespace BankManagementLibrary
 
         public Card(string number)
         {
-            throw new NotImplementedException();
+            this.number = number;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Card model &&
+                   number == model.number;
+        }
+
+        public override int GetHashCode()
+        {
+            return number.GetHashCode();
         }
     }
 }
