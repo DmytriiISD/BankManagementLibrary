@@ -66,16 +66,20 @@ namespace BankManagementLibrary
             Assert.Contains(expected, bank.accounts);
         }
 
-        [Fact]
-        public void RegisterAccount_UniqueCheck_ShouldNotAddAccountToList()
+        [Theory]
+        [InlineData("John", "Wick", "SnoopDogg@gmail.com", "+380000000001", "123456789")]
+        [InlineData("John", "Wick", "DrDre@gmail.com", "+380000000000", "123456799")]
+        [InlineData("John", "Wick", "JohnWick@gmail.com", "+380000000002", "023456789")]
+        public void RegisterAccount_UniqueCheck_ShouldNotAddAccountToList(string firstName,
+            string lastName, string email, string phoneNumber, string passportId)
         {
             //Arrange
             var bank = new Bank();
             var expected = false;
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
 
             //Act
-            var actual = bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            actual = bank.RegisterAccount("Snoop", "Dogg", "JohnWick@gmail.com", "+380000000000", "123456789");
+            var actual = bank.RegisterAccount(firstName, lastName, email, phoneNumber, passportId);
 
             //Assert
             Assert.Equal(expected, actual);

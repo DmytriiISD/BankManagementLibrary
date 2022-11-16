@@ -1,15 +1,30 @@
 ﻿using System;
-using System.Xml.Linq;
 
 namespace BankManagementLibrary
 {
     public class Account
     {
         private string firstName;
+
         private string lastName;
+
         private string email;
+        public string Email
+        {
+            get { return email; }
+        }
+
         private string phoneNumber;
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+        }
+
         private string passportId;
+        public string PassportId
+        {
+            get { return passportId; }
+        }
 
         public Account(string firstName, string lastName, string email, string phoneNumber, string passportId)
         {
