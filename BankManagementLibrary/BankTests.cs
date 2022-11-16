@@ -86,6 +86,21 @@ namespace BankManagementLibrary
         }
 
         [Fact]
+        public void ReturnAccount_CorrectInputData_ShouldReturnAccount()
+        {
+            //Arrange
+            var bank = new Bank();
+            var expected = "+380000000000";
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+
+            //Act
+            var actual = bank.ReturnAccount(expected).PhoneNumber;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void AddCreditCard_CorrectInputData_ShouldCreateCreditCard()
         {
             //Arrange
