@@ -182,5 +182,26 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("0000 0000 0000 0001")]
+        [InlineData("0000 0000 0001 000a")]
+        [InlineData("0000 0001 0001 0001")]
+        public void RemoveCreditCard_WrongInputData_ShouldNotRemoveCardFromAccount(string card)
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0001 0000 0001");
+            bank.ReturnAccount("+380000000000").RemoveCreditCard("0000 0000 0000 0001");
+            var expected = false;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").RemoveCreditCard(card);
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }

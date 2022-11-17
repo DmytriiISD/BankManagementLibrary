@@ -72,7 +72,14 @@ namespace BankManagementLibrary
 
         public bool RemoveCreditCard(string number)
         {
-            throw new NotImplementedException();
+            if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+                return false;
+            else if (cards.Exists(x => x.Number == number))
+                cards.Remove(cards.Find(x => x.Number == number));
+            else return false;
+            if (cards.Exists(x => x.Number == number))
+                return false;
+            else return true;
         }
     }
 }
