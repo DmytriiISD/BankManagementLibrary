@@ -69,5 +69,10 @@ namespace BankManagementLibrary
                 return false;
             else return true;
         }
+
+        public bool RemoveCreditCard(string number)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
