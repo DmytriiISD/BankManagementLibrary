@@ -5,7 +5,10 @@ namespace BankManagementLibrary
     public class Card
     {
         private string number;
-
+        public string Number
+        {
+            get { return number; }
+        }
         public Card(string number)
         {
             this.number = number;

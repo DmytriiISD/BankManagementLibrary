@@ -6,7 +6,11 @@ namespace BankManagementLibrary
 {
     internal class Bank
     {
-        public List<Account> accounts;
+        static public List<Account> accounts;
+        public List<Account> Accounts
+        {
+            get { return accounts; }
+        }
         public Bank()
         {
             accounts = new List<Account>();

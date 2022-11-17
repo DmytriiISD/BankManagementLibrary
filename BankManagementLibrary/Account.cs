@@ -60,6 +60,10 @@ namespace BankManagementLibrary
             if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
                 return false;
             Card card = new Card(number);
+            foreach (Account acc in Bank.accounts)
+                foreach (Card temp in acc.cards)
+                    if (temp.Number == number)
+                        return false;
             cards.Add(card);
             if (!cards.Contains(card))
                 return false;

@@ -63,7 +63,7 @@ namespace BankManagementLibrary
             bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
 
             //Assert
-            Assert.Contains(expected, bank.accounts);
+            Assert.Contains(expected, bank.Accounts);
         }
 
         [Theory]
@@ -146,18 +146,20 @@ namespace BankManagementLibrary
             Assert.Contains(expected, bank.ReturnAccount("+380000000000").cards);
         }
 
-        [Fact]
-        public void AddCreditCard_WrongInputData_ShouldNotAddCreditCardToList()
+        [Theory]
+        [InlineData("+380000000000", "0000 0000 0000 0001")]
+        [InlineData("+380111111111", "0000 0000 0000 0001")]
+        public void AddCreditCard_WrongInputData_ShouldNotAddCreditCardToList(string ph, string card)
         {
             //Arrange
             var bank = new Bank();
             bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
             bank.RegisterAccount("Snoop", "Dogg", "SnoopDogg@gmail.com", "+380111111111", "223456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
             var expected = false;
 
             //Act
-            var actual = bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-            actual = bank.ReturnAccount("+380111111111").AddCreditCard("0000 0000 0000 0001");
+            var actual = bank.ReturnAccount(ph).AddCreditCard(card);
 
             //Assert
             Assert.Equal(expected, actual);
