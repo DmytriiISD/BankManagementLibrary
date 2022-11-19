@@ -253,7 +253,7 @@ namespace BankManagementLibrary
 
             //Act
             var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
-           
+
 
             //Assert
             Assert.Equal(expected, actual);
@@ -279,46 +279,5 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, actual);
         }
-
-        [Fact]
-        public void TakeMoneyFromCard_CorrectInputData_ShouldTakeMoneyFromCard()
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-            bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
-            var expected = true;
-
-            //Act
-            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").TakeMoneyFromCard(50);
-
-
-            //Assert
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData(75)]
-        [InlineData(-100)]
-        [InlineData(0)]
-
-        public void TakeMoneyFromCard_WrongInputData_ShouldNotTakeMoneyFromCard(int money)
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-            bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
-            var expected = false;
-
-            //Act
-            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").TakeMoneyFromCard(money);
-
-
-            //Assert
-            Assert.Equal(expected, actual);
-        }
-
     }
 }
