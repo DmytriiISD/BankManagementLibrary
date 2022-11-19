@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using Xunit;
 
@@ -203,5 +204,121 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, actual);
         }
+
+
+        [Fact]
+        public void ReturnCreditCard_CorrectInputData_ShouldReturnCreditCard()
+        {
+            //Arrange
+            var bank = new Bank();
+            var expected = "0000 0000 0000 0001";
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard(expected).Number;
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("+380000000000", "0000 0000 0000 0000")]
+        [InlineData("+380111111111", "0000 0000 0000 0001")]
+        [InlineData("+380000000000", "0000 0000 0001 0000")]
+        [InlineData("+380111111111", "0000 0000 0000 0000")]
+
+        public void ReturnCreditCard_WrongInputData_ShouldTrowException(string ph, string card)
+        {
+            //Arrange
+            var bank = new Bank();
+            var expected = "0000 0000 0000 0001";
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.RegisterAccount("Snoop", "Dogg", "SnoopDogg@gmail.com", "+380111111111", "223456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.ReturnAccount("+380111111111").AddCreditCard("0000 0000 0001 0000");
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => bank.ReturnAccount(ph).ReturnCreditCard(card));
+        }
+
+        [Fact]
+        public void AddMoneyInCard_CorrectInputData_ShouldAddMoneyInCard()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            var expected = true;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
+           
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(-1000)]
+        [InlineData(-100)]
+        [InlineData(0)]
+
+        public void AddMoneyInCard_WrongInputData_ShouldNotAddMoneyInCard(int money)
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            var expected = false;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(money);
+
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void TakeMoneyFromCard_CorrectInputData_ShouldTakeMoneyFromCard()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
+            var expected = true;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").TakeMoneyFromCard(50);
+
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(75)]
+        [InlineData(-100)]
+        [InlineData(0)]
+
+        public void TakeMoneyFromCard_WrongInputData_ShouldNotTakeMoneyFromCard(int money)
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").AddMoneyInCard(50);
+            var expected = false;
+
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").TakeMoneyFromCard(money);
+
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
     }
 }
