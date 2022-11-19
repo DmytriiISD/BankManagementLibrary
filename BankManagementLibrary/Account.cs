@@ -90,16 +90,6 @@ namespace BankManagementLibrary
                 return cards.Find(x => x.Number == number);
             else throw new ArgumentException();
         }
-        //public bool AddMoneyInCard(Card card, int money)
-        //{
 
-        //    if (!cards.Exists(x => x.Number ==card.Number)|| money < 0)
-        //        return false;
-           
-        //    int result = card.Balance + money;
-        //    if (result < 0)
-        //        return false;
-        //    return true;
-        //}
     }
 }

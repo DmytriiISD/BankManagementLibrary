@@ -50,5 +50,16 @@ namespace BankManagementLibrary
                 return false;
             return true;
         }
+        public bool TakeMoneyFromCard(int money)
+        {
+
+            if (money <= 0)
+                return false;
+
+            balance = balance - money;
+            if (balance < 0)
+                return false;
+            return true;
+        }
     }
 }
