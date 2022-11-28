@@ -32,6 +32,21 @@ namespace BankManagementLibrary
 
         public Account(string firstName, string lastName, string email, string phoneNumber, string passportId)
         {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(email)
+                || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(passportId))
+                throw new ArgumentNullException();
+            else if (firstName.Length < 2 || firstName.Length > 100 || !Regex.IsMatch(firstName.Substring(1), @"^[a-z]+$") ||
+                !Regex.IsMatch(firstName[0].ToString(), @"^[A-Z]+$"))
+                throw new ArgumentException();
+            else if (lastName.Length < 2 || lastName.Length > 100 || !Regex.IsMatch(lastName.Substring(1), @"^[a-z]+$") ||
+                !Regex.IsMatch(lastName[0].ToString(), @"^[A-Z]+$"))
+                throw new ArgumentException();
+            else if (!Regex.Match(email, "[.\\-_A-Za-z0-9]+@([a-z0-9][\\-a-z0-9]+\\.)+[a-z]{2,6}").Success)
+                throw new ArgumentException();
+            else if (!Regex.IsMatch(phoneNumber, @"^\+[3][8][0]\d{9}$"))
+                throw new ArgumentException();
+            else if (!Regex.IsMatch(passportId, @"^\d{9}$"))
+                throw new ArgumentException();
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
@@ -57,9 +72,19 @@ namespace BankManagementLibrary
 
         public bool AddCreditCard(string number)
         {
-            if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+            Card card;
+            try
+            {
+                card = new Card(number);
+            }
+            catch(ArgumentNullException)
+            {
                 return false;
-            Card card = new Card(number);
+            }
+            catch(ArgumentException)
+            {
+                return false;
+            }
             foreach (Account acc in Bank.accounts)
                 foreach (Card temp in acc.cards)
                     if (temp.Number == number)
@@ -72,7 +97,9 @@ namespace BankManagementLibrary
 
         public bool RemoveCreditCard(string number)
         {
-            if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+            if (string.IsNullOrEmpty(number))
+                return false;
+            else if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
                 return false;
             else if (cards.Exists(x => x.Number == number))
                 cards.Remove(cards.Find(x => x.Number == number));

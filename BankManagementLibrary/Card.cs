@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
@@ -11,6 +12,10 @@ namespace BankManagementLibrary
         }
         public Card(string number)
         {
+            if (string.IsNullOrEmpty(number))
+                throw new ArgumentNullException();
+            else if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+                throw new ArgumentException();
             this.number = number;
         }
 

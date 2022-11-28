@@ -21,6 +21,7 @@ namespace BankManagementLibrary
 
         [Theory]
         [InlineData("", "", "", "", "")]
+        [InlineData(null, null, null, null, null)]
         [InlineData("john", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789")]
         [InlineData("JOhn", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789")]
         [InlineData("J", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789")]
@@ -106,6 +107,8 @@ namespace BankManagementLibrary
         [InlineData("+38000000000")]
         [InlineData("+111000000000")]
         [InlineData("+380123456789")]
+        [InlineData("")]
+        [InlineData(null)]
         public void ReturnAccount_WrongInputData_ShouldTrowException(string value)
         {
             //Arrange
@@ -116,40 +119,10 @@ namespace BankManagementLibrary
             Assert.Throws<ArgumentException>(() => bank.ReturnAccount(value));
         }
 
-        [Fact]
-        public void AddCreditCard_CorrectInputData_ShouldCreateCreditCard()
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            var expected = true;
-
-            //Act
-            var actual = bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0000");
-
-            //Assert
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void AddCreditCard_CorrectInputData_ShouldAddCreditCardToList()
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            var expected = new Card("0000 0000 0000 0001");
-
-            //Act
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-
-            //Assert
-            Assert.Contains(expected, bank.ReturnAccount("+380000000000").cards);
-        }
-
         [Theory]
         [InlineData("+380000000000", "0000 0000 0000 0001")]
         [InlineData("+380111111111", "0000 0000 0000 0001")]
-        public void AddCreditCard_WrongInputData_ShouldNotAddCreditCardToList(string ph, string card)
+        public void AddCreditCard_UniqueCheck_ShouldNotAddCreditCardToList(string ph, string card)
         {
             //Arrange
             var bank = new Bank();
@@ -160,45 +133,6 @@ namespace BankManagementLibrary
 
             //Act
             var actual = bank.ReturnAccount(ph).AddCreditCard(card);
-
-            //Assert
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void RemoveCreditCard_CorrectInputData_ShouldRemoveCardFromAccount()
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0001 0000 0001");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0001 0001 0001");
-            var expected = true;
-
-            //Act
-            var actual = bank.ReturnAccount("+380000000000").RemoveCreditCard("0000 0001 0000 0001");
-
-            //Assert
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
-        [InlineData("0000 0000 0000 0001")]
-        [InlineData("0000 0000 0001 000a")]
-        [InlineData("0000 0001 0001 0001")]
-        public void RemoveCreditCard_WrongInputData_ShouldNotRemoveCardFromAccount(string card)
-        {
-            //Arrange
-            var bank = new Bank();
-            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
-            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0001 0000 0001");
-            bank.ReturnAccount("+380000000000").RemoveCreditCard("0000 0000 0000 0001");
-            var expected = false;
-
-            //Act
-            var actual = bank.ReturnAccount("+380000000000").RemoveCreditCard(card);
 
             //Assert
             Assert.Equal(expected, actual);
