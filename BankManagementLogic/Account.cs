@@ -4,9 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
-    public class Account
+    internal class Account
     {
-        public List<Card> cards;
+        private List<Card> cards;
+        public List<Card> Cards
+        { 
+            get { return cards; }
+        }
 
         private string firstName;
 
@@ -85,10 +89,8 @@ namespace BankManagementLibrary
             {
                 return false;
             }
-            foreach (Account acc in Bank.accounts)
-                foreach (Card temp in acc.cards)
-                    if (temp.Number == number)
-                        return false;
+            if (Bank.accounts.Exists(x => x.cards.Exists(x => x.Number == number)))
+                return false;
             cards.Add(card);
             if (!cards.Contains(card))
                 return false;

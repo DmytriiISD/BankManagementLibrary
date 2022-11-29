@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace BankManagementLibrary
 {
@@ -32,7 +29,7 @@ namespace BankManagementLibrary
             account.AddCreditCard("0000 0000 0000 0001");
 
             //Assert
-            Assert.Contains(expected, account.cards);
+            Assert.Contains(expected, account.Cards);
         }
 
         [Theory]

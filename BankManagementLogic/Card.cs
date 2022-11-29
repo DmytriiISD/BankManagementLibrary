@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
-    public class Card
+    internal class Card
     {
         private string number;
         public string Number

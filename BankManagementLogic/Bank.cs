@@ -32,9 +32,9 @@ namespace BankManagementLibrary
             {
                 return false;
             }
-            foreach (Account acc in accounts)
-                if (acc.PassportId == passportId || acc.PhoneNumber == phoneNumber || acc.Email == email)
-                    return false;
+            if (accounts.Exists(x => x.PassportId == passportId || x.PhoneNumber == phoneNumber ||
+              x.Email == email))
+                return false;
             accounts.Add(account);
             if (!accounts.Contains(account))
                 return false;
