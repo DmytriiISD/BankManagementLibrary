@@ -38,5 +38,19 @@ namespace BankManagementLibrary
             //Assert
             Assert.Throws<ArgumentNullException>(() => new Card(number));
         }
+
+        [Fact]
+        public void UpdateBalance_CorrectInputData_ShouldWithdrawMoney()
+        {
+            //Arrange
+            var card = new Card("0000 0000 0000 0001");
+            var expected = 120;
+
+            //Act
+            card.UpdateBalance(120);
+
+            //Assert
+            Assert.Equal(expected, card.Balance);
+        }
     }
 }

@@ -6,10 +6,19 @@ namespace BankManagementLibrary
     internal class Card
     {
         private string number;
+
+        private decimal balance;
+
         public string Number
         {
             get { return number; }
         }
+
+        public decimal Balance
+        {
+            get { return balance; }
+        }
+
         public Card(string number)
         {
             if (string.IsNullOrEmpty(number))
@@ -17,6 +26,11 @@ namespace BankManagementLibrary
             else if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
                 throw new ArgumentException();
             this.number = number;
+        }
+
+        public void UpdateBalance(decimal money)
+        {
+            throw new NotImplementedException();
         }
 
         public override bool Equals(object obj)
