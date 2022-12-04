@@ -30,7 +30,10 @@ namespace BankManagementLibrary
 
         public void UpdateBalance(decimal money)
         {
-            throw new NotImplementedException();
+            if ((balance + money) < 0)
+                throw new ArithmeticException();
+            else
+                balance = balance + money;
         }
 
         public override bool Equals(object obj)

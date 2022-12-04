@@ -52,5 +52,15 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, card.Balance);
         }
+
+        [Fact]
+        public void UpdateBalance_NoMoneyInBalance_ShouldNotWithdrawMoney()
+        {
+            //Arrange
+            var card = new Card("0000 0000 0000 0001");
+
+            //Assert
+            Assert.Throws<ArithmeticException>(() => card.UpdateBalance(-1));
+        }
     }
 }
