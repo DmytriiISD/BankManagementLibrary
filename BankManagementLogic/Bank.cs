@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
@@ -24,11 +25,11 @@ namespace BankManagementLibrary
             {
                 account = new Account(firstName, lastName, email, phoneNumber, passportId);
             }
-            catch(ArgumentNullException) 
+            catch (ArgumentNullException)
             {
                 return false;
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 return false;
             }
@@ -50,6 +51,11 @@ namespace BankManagementLibrary
             else if (accounts.Exists(x => x.PhoneNumber == phNumber))
                 return accounts.Find(x => x.PhoneNumber == phNumber);
             else throw new ArgumentException();
+        }
+
+        public void GetSummary()
+        {
+            throw new NotImplementedException();
         }
     }
 }

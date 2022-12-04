@@ -137,5 +137,37 @@ namespace BankManagementLibrary
             //Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void GetSummary_ShouldSortAccountsInListByTotalBalance()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "111111111");
+            bank.RegisterAccount("Snoop", "Dogg", "SnoopDogg@gmail.com", "+380111111111", "222222222");
+            bank.RegisterAccount("Ivan", "Dub", "van.tancheg@gmail.com", "+380222222222", "333333333");
+
+            bank.Accounts.Find(x => x.PhoneNumber == "+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.Accounts.Find(x => x.PhoneNumber == "+380000000000").AddCreditCard("0000 0000 0000 0011");            
+            bank.Accounts.Find(x => x.PhoneNumber == "+380000000000").Cards.Find(x => x.Number == "0000 0000 0000 0011").UpdateBalance(1);
+            bank.Accounts.Find(x => x.PhoneNumber == "+380000000000").Cards.Find(x => x.Number == "0000 0000 0000 0001").UpdateBalance(99);
+
+            bank.Accounts.Find(x => x.PhoneNumber == "+380111111111").AddCreditCard("0000 0000 0000 0002");
+            bank.Accounts.Find(x => x.PhoneNumber == "+380111111111").Cards.Find(x => x.Number == "0000 0000 0000 0002").UpdateBalance(101);
+
+            bank.Accounts.Find(x => x.PhoneNumber == "+380222222222").AddCreditCard("0000 0000 0000 0003");
+            bank.Accounts.Find(x => x.PhoneNumber == "+380222222222").Cards.Find(x => x.Number == "0000 0000 0000 0003").UpdateBalance(99);
+
+            //Act
+            bank.GetSummary();
+
+            //Assert
+            Assert.Equal("0000 0000 0000 0003", bank.Accounts[0].Cards[0].Number);
+
+            Assert.Equal("0000 0000 0000 0011", bank.Accounts[1].Cards[0].Number);
+            Assert.Equal("0000 0000 0000 0001", bank.Accounts[1].Cards[1].Number);
+
+            Assert.Equal("0000 0000 0000 0002", bank.Accounts[2].Cards[0].Number);  
+        }
     }
 }
