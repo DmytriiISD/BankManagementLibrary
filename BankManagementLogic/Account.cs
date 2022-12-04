@@ -11,6 +11,7 @@ namespace BankManagementLibrary
         public List<Card> Cards
         { 
             get { return cards; }
+            set { cards = value; }
         }
 
         private string firstName;

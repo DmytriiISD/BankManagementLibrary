@@ -55,7 +55,8 @@ namespace BankManagementLibrary
 
         public void GetSummary()
         {
-            throw new NotImplementedException();
+            accounts = accounts.OrderBy(x => x.Cards.Sum(x => x.Balance)).ToList();
+            accounts.ForEach(x => x.Cards = x.Cards.OrderBy(x => x.Balance).ToList());
         }
     }
 }
