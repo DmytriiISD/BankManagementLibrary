@@ -121,7 +121,7 @@ namespace BankManagementLibrary
 
         public void GetStatement()
         {
-            throw new NotImplementedException();
+            cards = cards.OrderBy(x => x.Balance).ToList();
         }
     }
 }
