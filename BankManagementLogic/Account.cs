@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
@@ -89,9 +90,16 @@ namespace BankManagementLibrary
             {
                 return false;
             }
-            if (Bank.accounts.Exists(x => x.cards.Exists(x => x.Number == number)))
-                return false;
-            cards.Add(card);
+            try
+            {
+                if (Bank.accounts.Exists(x => x.cards.Exists(x => x.Number == number)))
+                    return false;
+                else cards.Add(card);
+            }
+            catch (NullReferenceException)
+            {
+                cards.Add(card);
+            }
             if (!cards.Contains(card))
                 return false;
             else return true;
@@ -109,6 +117,11 @@ namespace BankManagementLibrary
             if (cards.Exists(x => x.Number == number))
                 return false;
             else return true;
+        }
+
+        public void GetStatement()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -39,12 +39,13 @@ namespace BankManagementLibrary
         public override bool Equals(object obj)
         {
             return obj is Card model &&
-                   number == model.number;
+                   number == model.number &&
+                   balance == model.balance;
         }
 
         public override int GetHashCode()
         {
-            return number.GetHashCode();
+            return HashCode.Combine(balance, number);
         }
     }
 }
