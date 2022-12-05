@@ -169,5 +169,45 @@ namespace BankManagementLibrary
 
             Assert.Equal("0000 0000 0000 0002", bank.Accounts[2].Cards[0].Number);  
         }
+
+        [Fact]
+        public void GetSummary_ShouldSortAccountsInListByPassportID()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "000000002");
+            bank.RegisterAccount("Snoop", "Dogg", "SnoopDogg@gmail.com", "+380111111111", "000000001");
+            bank.RegisterAccount("Ivan", "Dub", "van.tancheg@gmail.com", "+380222222222", "333333333");
+
+            //Act
+            bank.GetSummary(new SortByPassportID());
+
+            //Assert
+            Assert.Equal("000000001", bank.Accounts[0].PassportId);
+            Assert.Equal("000000002", bank.Accounts[1].PassportId);
+            Assert.Equal("333333333", bank.Accounts[2].PassportId);
+        }
+
+        [Fact]
+        public void GetSummary_ShouldSortAccountsInListByCardNumber()
+        {
+            //Arrange
+            var bank = new Bank();
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "000000002");
+            bank.RegisterAccount("Snoop", "Dogg", "SnoopDogg@gmail.com", "+380111111111", "000000001");
+            bank.RegisterAccount("Ivan", "Dub", "van.tancheg@gmail.com", "+380222222222", "333333333");
+
+            bank.Accounts.Find(x => x.PhoneNumber == "+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.Accounts.Find(x => x.PhoneNumber == "+380111111111").AddCreditCard("0000 0000 0000 0111");
+            bank.Accounts.Find(x => x.PhoneNumber == "+380222222222").AddCreditCard("0000 0000 0000 0011");
+
+            //Act
+            bank.GetSummary(new SortByCardNumber());
+
+            //Assert
+            Assert.Equal("0000 0000 0000 0001", bank.Accounts[0].Cards[0].Number);
+            Assert.Equal("0000 0000 0000 0011", bank.Accounts[1].Cards[0].Number);
+            Assert.Equal("0000 0000 0000 0111", bank.Accounts[2].Cards[0].Number);
+        }
     }
 }

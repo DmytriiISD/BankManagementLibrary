@@ -17,6 +17,11 @@ namespace BankManagementLibrary
             accounts = new List<Account>();
         }
 
+        public Bank(IGetAccounts source)
+        {
+            source.GetList();
+        }
+
         public bool RegisterAccount(string firstName, string lastName,
             string email, string phoneNumber, string passportId)
         {
@@ -57,6 +62,45 @@ namespace BankManagementLibrary
         {
             accounts = accounts.OrderBy(x => x.Cards.Sum(x => x.Balance)).ToList();
             accounts.ForEach(x => x.Cards = x.Cards.OrderBy(x => x.Balance).ToList());
+        }
+
+        public void GetSummary(IAccount filter)
+        {
+            filter.Sort();
+        }
+    }
+
+    public interface IAccount
+    {
+        public void Sort();
+    }
+
+    internal class SortByPassportID : IAccount
+    {
+        public void Sort()
+        {
+            Bank.accounts = Bank.accounts.OrderBy(x => x.PassportId).ToList();
+        }
+    }
+
+    internal class SortByCardNumber : IAccount
+    {
+        public void Sort()
+        {
+            Bank.accounts = Bank.accounts.OrderBy(x => x.Cards.Max(x => x.Number)).ToList();
+        }
+    }
+
+    public interface IGetAccounts
+    {
+        public void GetList();
+    }
+
+    internal class DBSource : IGetAccounts
+    {
+        public void GetList()
+        {
+
         }
     }
 }
