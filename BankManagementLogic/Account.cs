@@ -135,7 +135,15 @@ namespace BankManagementLibrary
         {
 
 
-         
+            if (cards == null)
+            {
+                Console.WriteLine("Карток не знайдено");
+
+            }
+
+            cards = cards.OrderBy(x => x.Balance).ToList();
+
+
         }
 
     }
