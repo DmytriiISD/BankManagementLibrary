@@ -1,22 +1,27 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace BankManagementLibrary
 {
-    public class Card
+    internal class Card
     {
         private string number;
-        private int balance;
+        private decimal balance;
         public string Number
         {
             get { return number; }
         }
 
-        public int Balance
+        public decimal Balance
         {
             get { return balance; }
         }
         public Card(string number)
         {
+            if (string.IsNullOrEmpty(number))
+                throw new ArgumentNullException();
+            else if (!Regex.IsMatch(number, @"^\d{4}\s\d{4}\s\d{4}\s\d{4}$"))
+                throw new ArgumentException();
             this.number = number;
             balance = 0;
         }
@@ -40,7 +45,7 @@ namespace BankManagementLibrary
         }
 
 
-        public bool UpdateBalanceInCard(int money)
+        public bool UpdateBalanceInCard(decimal money)
         {
             balance = balance + money;
            if(balance < 0)
