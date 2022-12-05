@@ -13,6 +13,16 @@ namespace BankManagementLibrary
         private string lastName;
 
         private string email;
+
+        public string FirstName
+        {
+            get { return firstName; }
+        }
+
+        public string LastName
+        {
+            get { return lastName; }
+        }
         public string Email
         {
             get { return email; }
@@ -89,6 +99,26 @@ namespace BankManagementLibrary
             else if (cards.Exists(x => x.Number == number))
                 return cards.Find(x => x.Number == number);
             else throw new ArgumentException();
+        }
+
+        public bool CardsInfoByAccount()
+        {
+
+
+            if (cards == null)
+            {
+                Console.WriteLine("Карток не знайдено");
+                return false;
+            }
+
+
+            Console.WriteLine($"Акаунт:{FirstName} {LastName}");
+            Console.WriteLine("Кредитні картки:");
+            cards.Sort((a, b) => b.Balance - a.Balance);
+            foreach (Card card in cards)
+                Console.WriteLine($"Номер: {card.Number} Баланс:{card.Balance}");
+
+            return true;
         }
 
     }

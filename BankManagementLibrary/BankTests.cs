@@ -242,6 +242,22 @@ namespace BankManagementLibrary
             Assert.Throws<ArgumentException>(() => bank.ReturnAccount(ph).ReturnCreditCard(card));
         }
 
-       
+
+        [Fact]
+        public void CardInfoFromAccount_CorrectInputData_ShouldShowInfoOfAccount()
+        {
+            var bank = new Bank();
+          
+            var expected = true;
+            bank.RegisterAccount("John", "Wick", "JohnWick@gmail.com", "+380000000000", "123456789");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0001");
+            bank.ReturnAccount("+380000000000").AddCreditCard("0000 0000 0000 0002");
+            bank.ReturnAccount("+380000000000").ReturnCreditCard("0000 0000 0000 0001").UpdateBalanceInCard(100);
+            //Act
+            var actual = bank.ReturnAccount("+380000000000").CardsInfoByAccount();
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
