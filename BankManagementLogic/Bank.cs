@@ -69,38 +69,4 @@ namespace BankManagementLibrary
             filter.Sort();
         }
     }
-
-    public interface IAccount
-    {
-        public void Sort();
-    }
-
-    internal class SortByPassportID : IAccount
-    {
-        public void Sort()
-        {
-            Bank.accounts = Bank.accounts.OrderBy(x => x.PassportId).ToList();
-        }
-    }
-
-    internal class SortByCardNumber : IAccount
-    {
-        public void Sort()
-        {
-            Bank.accounts = Bank.accounts.OrderBy(x => x.Cards.Max(x => x.Number)).ToList();
-        }
-    }
-
-    public interface IGetAccounts
-    {
-        public void GetList();
-    }
-
-    internal class DBSource : IGetAccounts
-    {
-        public void GetList()
-        {
-
-        }
-    }
 }

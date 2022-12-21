@@ -9,7 +9,7 @@ namespace BankManagementLibrary
     {
         private List<Card> cards;
         public List<Card> Cards
-        { 
+        {
             get { return cards; }
             set { cards = value; }
         }
@@ -17,6 +17,15 @@ namespace BankManagementLibrary
         private string firstName;
 
         private string lastName;
+
+        public string FirstName
+        {
+            get { return firstName; }
+        }
+        public string LastName
+        {
+            get { return lastName; }
+        }
 
         private string email;
         public string Email
